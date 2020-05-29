@@ -19,7 +19,8 @@ class Article(models.Model):
     article_title = models.CharField('Название статьи', max_length = 200)
     article_text = models.TextField('Текст статьи')
     pub_date = models.DateTimeField('Дата публикации')
-    author = models.ForeignKey('Author', related_name='articles', on_delete=models.CASCADE)
+#    author = models.ForeignKey('Author', related_name='articles', on_delete=models.CASCADE)
+    author = models.ForeignKey(Author, on_delete = models.CASCADE)
 
     def __str__(self):
         return self.article_title

@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import Article, Comment
+from .models import Article, Comment, Author
 from django.http import Http404, HttpResponseRedirect
 from django.urls import reverse
 from rest_framework.response import Response
@@ -12,6 +12,7 @@ from rest_framework.generics import get_object_or_404
 
 def index(request):
     latest_articles_list = Article.objects.order_by('-pub_date')[:5]
+
     return render(request, 'articles/list.html', {'latest_articles_list': latest_articles_list})
 
 def detail(request, article_id):
@@ -21,8 +22,18 @@ def detail(request, article_id):
         raise Http404("Article not found.")
 
     latest_comments_list = a.comment_set.order_by('-id')[:10]
+    published_by = a.author.author_name
 
-    return render(request, 'articles/detail.html', {'article': a, 'latest_comments_list': latest_comments_list})
+    return render(request, 'articles/detail.html', {'article': a, 'latest_comments_list': latest_comments_list, 'published_by': published_by})
+
+#def published_by(request,author_id):
+#    try:
+#        p = Author.objects.get(id=author_id)
+#    except:
+#        raise Http404("No Author.")
+#
+#    published = p.author_name
+#    return render(request, 'articles/detail.html', {'author': published})
 
 def leave_comment(request, article_id):
     try:
