@@ -1,6 +1,6 @@
 from django.urls import path
 from . import views
-from .views import ArticleView
+from .views import ArticleView, AuthorView
 
 
 app_name = 'articles'
@@ -11,4 +11,6 @@ urlpatterns = [
 #    path('<int:article_id>/published_by/', views.published_by, name = 'published_by'),
     path('articles/', ArticleView.as_view()),
     path('articles/<int:pk>', ArticleView.as_view()),
+    path('authors/', AuthorView.as_view()),
+    path('authors/<int:pk>', AuthorView.as_view()),
 ]
